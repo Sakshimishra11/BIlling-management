@@ -1,0 +1,35 @@
+<!-- templates/mallbilling/admin_dashboard.html -->
+{% extends 'Base.html' %}
+{% block myblock %}
+{% load static %}
+<link rel="stylesheet" href="{%static 'stylesheet/admin_dashboard.css'%}">
+
+<marquee behavior="" direction="up"><center><h1 class="header">Welcome, {{ admin.admin_id }}</h1></center></marquee>
+    <center><h2 class="header">Product List</h2><br><br>
+    <table border="2px">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td><a href="{% url 'delete_product' product.id %}">Delete</a></td>
+                <td><a href="{% url 'update_product' product.id %}">Update</a></td>
+                
+            </tr>
+
+        {% endfor %}
+
+    </table>
+</center>
+    <br>
+
+<center>
+    <a href="{% url 'create_product' %}">Create Product</a><br>
+    <a href="{% url 'register_employee' %}">Register Employee</a>
+
+</center>
+<br><br><br><br><br>
+    {% endblock %}

@@ -1,0 +1,71 @@
+/* CSS code for create_product.html */
+
+/* Style the form container */
+h1 {
+  color: white;
+  font-family: jokerman;
+  text-shadow: 1px 2px 5px red;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Style the form inputs */
+form input[type="text"],
+form input[type="number"] {
+  width: 100%;
+  background-color: transparent;
+  padding: 10px;
+  color: white;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+form input[type="text"]:hover {
+  background-color: #18224B;
+  border-radius: .6em;
+  box-shadow: 1px 1px 2px yellow, 0 0 25px pink, 0 0 5px red;
+
+}
+
+form input[type="number"]:hover {
+  box-shadow: 1px 1px 2px yellow, 0 0 25px pink, 0 0 5px red;
+
+}
+
+/* Style the form submit button */
+form input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+form input[type="submit"]:hover{
+  background-color: #18224B;
+  border-radius: .6em;
+  box-shadow: 1px 1px 2px yellow,0 0 25px pink ,0 0 5px red;
+}
+
+
+/* Style the form submit button on hover */
+/* form input[type="submit"]:hover {
+  background-color: #45a049;
+} */
+
+/* Style the form field labels */
+form label {
+  display: block;
+  color: white;
+  text-shadow: 1px 2px 5px red;
+  font-size: x-large;
+  margin-bottom: 5px;
+  font-weight: bold;
+}

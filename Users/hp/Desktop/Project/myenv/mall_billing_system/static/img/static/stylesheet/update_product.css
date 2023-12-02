@@ -1,0 +1,42 @@
+/* CSS code for update_product.html */
+
+/* Style the form container */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  /* Style the form inputs */
+  form input[type="text"],
+  form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+  /* Style the form submit button */
+  form button[type="submit"] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Style the form submit button on hover */
+  form button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  /* Style the form field labels */
+  form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  

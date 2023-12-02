@@ -1,0 +1,43 @@
+<!-- templates/mallbilling/login.html -->
+
+{% extends 'Base.html' %}
+{% block myblock %}
+{% load static%}
+
+  <link rel="stylesheet" href="{%static 'stylesheet/admin_login.css'%}">
+  <center>
+
+  
+    <br><br>
+
+    <marquee behavior="" direction="up"><h1 style="color:white;">Admin Login</h1></marquee>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+
+
+    <!-- login.html -->
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- Rest of the login form -->
+
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <label for="admin_id">Admin ID:</label>
+      <input type="email" id="admin_id" name="admin_id" required><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required><br><br>
+      <input type="submit" value="Login">
+    </form>
+
+  </center>
+  
+
+{% endblock %}

@@ -1,0 +1,84 @@
+/* CSS code for admin login page */
+
+/* Style the heading */
+h1 {
+    color: white;
+    text-align: center;
+    font-family: jokerman;
+    text-shadow: 1px 2px 5px red;
+  }
+  label{
+    color: white;
+    text-shadow: 1px 2px 5px red;
+    font-weight: bold;
+  }
+  
+  /* Style the form container */
+  form {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* Style the form inputs */
+  form input[type="email"],
+  form input[type="password"] {
+    width: 100%;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    background: 5px;
+    background-color: transparent;
+    font-size: larger;
+    /* color: antiquewhit; */
+  }
+  
+  /* Style the form submit button */
+  form input[type="submit"] {
+    width: 100%;
+    background-color: transparent;
+    border-radius: 0.6rem;
+    font-size: large;
+    text-shadow: 1px 2px 5px red;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+
+  
+  form input[type="password"]:hover{
+    color: antiquewhite;
+    /* background-color: #e2e9b0; */
+    border-radius: .6em;
+    box-shadow: 1px 1px 2px #c91818,0 0 25px rgb(0, 251, 255) ,0 0 5px rgb(145, 145, 217);
+  }
+
+  form input[type="email"]:hover{
+    color: antiquewhit;
+    /* background-color: #18224B; */
+    border-radius: .6em;
+    box-shadow: 1px 1px 2px yellow,0 0 25px pink ,0 0 5px red;
+  }
+  
+  /* Style the form submit button on hover */
+  form input[type="submit"]:hover {
+    /* background-color: hsl(228, 52%, 19%,0.5); */
+    border-radius: .6em;
+    box-shadow: 1px 1px 2px yellow,0 0 25px pink ,0 0 5px red;
+  }
+  
+  /* Style the error messages */
+  .messages {
+    list-style-type: none;
+    padding: 0;
+    text-shadow: 1px 2px 5px red;
+    margin-bottom: 10px;
+  }
+  
+  .messages li {
+    color:ghostwhite;
+    font-size: x-large;
+    text-shadow: 1px 2px 5px red;
+  }
+  

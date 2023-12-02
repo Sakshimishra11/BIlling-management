@@ -1,0 +1,17 @@
+{% extends 'Base.html' %}
+{% block myblock %}
+{% load static%}
+<link rel="stylesheet" href="{%static 'stylesheet/employee_registeration.css'%}">
+<center><br>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+  </form>
+
+</center>
+<br><br>
+
+{% endblock %}  
+  

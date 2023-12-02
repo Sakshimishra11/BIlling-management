@@ -1,0 +1,46 @@
+<!-- templates/mallbilling/admin_dashboard.html -->
+{% extends 'Base.html' %}
+{% block myblock %}
+{% load static %}
+<link rel="stylesheet" href="{%static 'stylesheet/admin_dashboard1.css'%}">
+<div style="background-image: url({% static 'img/6.webp' %});
+position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background-size: 100% 100%; background-repeat: no-repeat;">
+<br>
+<marquee behavior="" direction="up"><center><h1 class="header" id="loginId">Welcome, {{ admin.admin_id }}</h1></center></marquee>
+    <br><br><center><h2 class="header" id="heading">Product List</h2><br>
+    <table border="2px">
+        <tr>
+            <th>Product Name</th>
+            <th style="padding-left:10rem;">Product Price</th>
+            <th colspan="2" style="padding-left:1rem;">Modification</th>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td><a href="{% url 'delete_product' product.id %}">Delete</a></td>
+                <td><a href="{% url 'update_product' product.id %}">Update</a></td>
+                
+            </tr>
+
+        {% endfor %}
+
+    </table>
+</center>
+    <br>
+
+<center>
+    <a href="{% url 'create_product' %}">Create Product</a><br>
+    <a href="{% url 'register_employee' %}">Register Employee</a>
+
+</center>
+<br><br><br><br><br>
+
+</div>
+    {% endblock %}

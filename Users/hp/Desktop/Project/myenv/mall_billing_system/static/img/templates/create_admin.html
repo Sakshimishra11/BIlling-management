@@ -1,0 +1,18 @@
+<!-- templates/mallbilling/create_admin.html -->
+
+{% extends 'Base.html' %}
+{% block myblock %}
+{% load static%}
+<link rel="stylesheet" href="{%static 'stylesheet/admin_create.css'%}">
+<br><br>
+
+    <h1>Create Admin</h1>
+    <form method="POST" action="{% url 'create_admin' %}" class="form-container">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Create">
+    </form>
+
+    <br><br><br><br><br>
+
+    {% endblock %}

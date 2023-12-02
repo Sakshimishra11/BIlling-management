@@ -1,0 +1,78 @@
+/* CSS code for employee registration page */
+
+/* Style the form container */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  /* Style the form inputs */
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="password"],select {
+    width: 100%;
+    padding: 10px;
+    color: white;
+    background-color: transparent;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  form input[type="text"]:hover{
+    border-radius: .6em;
+    box-shadow: 1px 1px 2px yellow, 0 0 25px pink, 0 0 5px red;
+  }
+  form input[type="email"]:hover{
+    border-radius: .6em;
+    box-shadow: 1px 1px 2px yellow, 0 0 25px pink, 0 0 5px red;
+  }
+  form input[type="password"]:hover{
+    border-radius: .6em;
+    box-shadow: 1px 1px 2px yellow,0 0 25px pink ,0 0 5px red;
+  }
+  
+  /* Style the form submit button */
+  form button[type="submit"] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  form button[type="submit"]:hover{
+    border-radius: .6em;
+    box-shadow: 1px 1px 2px rgb(14, 14, 14),0 0 25px pink ,0 0 5px red;
+  }
+
+
+  /* Style the form submit button on hover */
+  /* form button[type="submit"]:hover {
+    background-color: #45a049;
+  } */
+  
+  /* Style the form field labels */
+  form label {
+    display: block;
+    color: white;
+    text-shadow: 1px 2px 5px red;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  /* Style the form field error messages */
+  form .error {
+    color: red;
+    margin-top: 5px;
+    font-size: 12px;
+  }
+  
+  /* Style the form success message */
+  form .success {
+    color: green;
+    margin-top: 5px;
+    font-size: 12px;
+  } 

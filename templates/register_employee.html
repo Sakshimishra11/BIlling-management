@@ -1,0 +1,27 @@
+{% extends 'Base.html' %}
+{% block myblock %}
+{% load static%}
+<link rel="stylesheet" href="{%static 'stylesheet/employee_registeration1.css'%}">
+
+<div style="background-image: url({% static 'img/21.jpg' %});
+position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background-size: 100% 100%; background-repeat: no-repeat;">
+<center><br>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+  </form>
+
+</center>
+<br><br>
+</div>
+
+{% endblock %}  
+  

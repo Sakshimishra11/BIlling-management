@@ -1,0 +1,16 @@
+<!-- update_product.html -->
+
+{% extends 'Base.html' %}
+{% block myblock %}
+{% load static%}
+<link rel="stylesheet" href="{%static 'stylesheet/update_product.css'%}">
+
+
+  <h1>Update Product</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+  </form>
+
+  {% endblock %}

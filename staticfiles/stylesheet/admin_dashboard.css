@@ -1,0 +1,64 @@
+/* styles.css */
+
+/* Header */
+.header {
+    
+    color: #fff;
+    padding: 10px;
+    font-family: jokerman;
+    text-shadow: 1px 2px 5px red;
+  }
+  
+  /* Table */
+  table {
+    border-collapse: collapse;
+    color: white;
+    width: 100%;
+    text-shadow: 1px 2px 5px red;
+  }
+  
+  table th {
+    padding: 8px;
+    color: whitesmoke;
+    text-align: left;
+    text-shadow: 1px 2px 5px yellow;
+  }
+  table td {
+    padding: auto;
+    font-size: larger;
+    font-weight: 700;
+    width: 60%;
+    text-align: center;
+    font-family: sans-serif;
+    text-shadow: 1px 2px 5px red;
+  }
+  
+  /* table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  } */
+  
+  /* table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  } */
+  
+  /* table tr:hover {
+    background-color: #ddd;
+  }
+   */
+  /* Links */
+  a {
+    color: #333;
+    text-decoration: none;
+    color: white;
+    font-size: larger;
+    font-weight: bolder;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+    font-size: larger;
+    color: white;
+    font-weight: bolder;
+  }
+  

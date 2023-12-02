@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Bill</title>
+</head>
+<body>
+  <h1>Bill</h1>
+
+  <h2>Customer Information</h2>
+  <p>Name: {{ bill_data.customer_name }}</p>
+  <p>Email: {{ bill_data.customer_email }}</p>
+  <p>Phone: {{ bill_data.customer_mobile }}</p>
+
+  <h2>Product Information</h2>
+  {% for product in bill_data.products %}
+    <p>Product Name: {{ product.name }}</p>
+    <p>Price: ${{ product.price }}</p>
+    <p>Quantity: {{ product.quantity }}</p>
+    <p>Subtotal: ${{ product.subtotal }}</p>
+    <hr>
+  {% endfor %}
+
+  <h2>Bill Summary</h2>
+  <p>Total Amount: ${{ bill_data.total }}</p>
+</body>
+</html>

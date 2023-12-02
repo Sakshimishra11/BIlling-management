@@ -1,0 +1,35 @@
+<!-- templates/mallbilling/create_product.html -->
+
+{% extends 'Base.html' %}
+{% block myblock %}
+{% load static%}
+<link rel="stylesheet" href="{%static 'stylesheet/create_product.css'%}">
+<div style="background-image: url({% static 'img/17.jpg' %});
+position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background-size: 100% 100%; background-repeat: no-repeat;">
+
+  <br><br>
+<center>
+
+    <marquee behavior="" direction="up">
+        <h1 style="margin-left: 30rem;">Create Product</h1>
+    </marquee><br><br>
+    <form method="POST" action="{% url 'create_product' %}">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" required><br><br>
+        <br>
+        <input type="submit" value="Create">
+    </form>
+</center>
+<br><br><br><br>
+</div>
+
+{% endblock %}

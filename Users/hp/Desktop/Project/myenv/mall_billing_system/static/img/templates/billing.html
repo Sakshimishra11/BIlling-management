@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Billing System</title>
+  {% load static%}
+  <link rel="stylesheet" href="{%static 'stylesheet/billing.css'%}">
+</head>
+
+<body style="background-image: url({% static 'img/d.avif' %});">
+  <!-- <img src="{static'/img/1.jpg'}" alt="Logo" height="30px" width="150px"> -->
+
+  <h1>Customer Billing</h1>
+  <form method="post" id="billing-form">
+    {% csrf_token %}
+
+
+
+    <!-- Customer details -->
+    <label for="customer-name">Customer Name: <input type="text" id="customer-name" name="customer_name"></label>
+    <!-- Select product -->
+    <label for="product" style="margin-left: 15rem;">Select Product:</label>
+    <select id="product" name="product">
+      {% for product in products %}
+      <option value="{{ product.id }}" data-price="{{ product.price }}">{{ product.name }}</option>
+      {% endfor %}
+    </select>
+    <br>
+
+    <label for="customer-email">Customer Email: <input type="email" id="customer-email" name="customer_email"></label>
+
+    <!-- Quantity -->
+    <label for="quantity" style="margin-left: 15rem;">Select Quantity:</label>
+    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+    <br>
+    <label for="customer-mobile">Customer Phone: <input type="number" id="customer-mobile"
+        name="customer_mobile"></label>
+
+
+
+    <br><br>
+
+
+
+    <div id="price"></div>
+
+    <br><br>
+
+
+    <br><br>
+
+    <!-- Add to cart button -->
+    <center><button type="button" id="add-to-cart-btn">Add to Cart</button></center>
+  </form>
+
+  <h2>Cart</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody id="cart-items">
+      <!-- Cart items will be dynamically added here -->
+    </tbody>
+  </table>
+
+  <h3>Total Amount: $<span id="total-amount">0.00</span></h3>
+
+  <button type="button" onclick="generateBill()">Generate Bill</button>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+
+  <script>
+    var cartItems = [];
+
+    $(document).ready(function () {
+      $('#product').change(function () {
+        var productId = $(this).val();
+        fetchProductPrice(productId);
+      });
+
+      $('#add-to-cart-btn').click(function () {
+        addToCart();
+      });
+    });
+
+    function fetchProductPrice(productId) {
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          type: 'GET',
+          url: '/get_product_price/',
+          data: {
+            'product_id': productId
+          },
+          success: function (response) {
+            const price = response.price;
+            resolve(parseFloat(price));
+          },
+          error: function (xhr, status, error) {
+            reject(error);
+          }
+        });
+      });
+    }
+
+
+    function addToCart() {
+      const productSelect = document.getElementById('product');
+      const quantityInput = document.getElementById('quantity');
+      const productId = productSelect.value;
+      const productName = productSelect.options[productSelect.selectedIndex].text;
+      const quantity = parseInt(quantityInput.value);
+
+      const existingItemIndex = cartItems.findIndex(item => item.productId === productId);
+      if (existingItemIndex !== -1) {
+        cartItems[existingItemIndex].quantity += quantity; // Update the quantity
+      } else {
+        cartItems.push({
+          productId: productId,
+          productName: productName,
+          quantity: quantity
+        });
+      }
+
+      renderCart();
+      calculateTotalAmount();
+
+      productSelect.selectedIndex = 0;
+      quantityInput.value = 1;
+    }
+
+
+
+    function renderCart() {
+      const cartItemsContainer = document.getElementById('cart-items');
+      cartItemsContainer.innerHTML = '';
+
+      for (const item of cartItems) {
+        const row = document.createElement('tr');
+        const productCell = document.createElement('td');
+        productCell.textContent = item.productName;
+        const priceCell = document.createElement('td');
+        priceCell.textContent = '$0.00'; // Set initial price
+        const quantityCell = document.createElement('td');
+        quantityCell.textContent = item.quantity;
+        const subtotalCell = document.createElement('td');
+        subtotalCell.textContent = '$0.00'; // Set initial subtotal
+
+        row.appendChild(productCell);
+        row.appendChild(priceCell);
+        row.appendChild(quantityCell);
+        row.appendChild(subtotalCell);
+        cartItemsContainer.appendChild(row);
+
+        fetchProductPrice(item.productId)
+          .then(price => {
+            priceCell.textContent = '$' + price.toFixed(2);
+            const subtotal = price * item.quantity;
+            subtotalCell.textContent = '$' + subtotal.toFixed(2);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+
+      }
+    }
+
+    function calculateTotalAmount() {
+      const totalAmountElement = document.getElementById('total-amount');
+      let totalAmount = 0;
+
+      for (const item of cartItems) {
+        const priceElement = document.querySelector('option[value="' + item.productId + '"]');
+        const price = parseFloat(priceElement.getAttribute('data-price'));
+        const subtotal = price * item.quantity;
+        totalAmount += subtotal;
+      }
+
+      totalAmountElement.textContent = totalAmount.toFixed(2);
+    }
+
+    async function generateBill() {
+
+      const customerName = document.getElementById("customer-name").value;
+      const customerEmail = document.getElementById("customer-email").value;
+      const customerMobile = document.getElementById("customer-mobile").value;
+
+
+      if (!customerName) {
+        alert("Please enter Customer name.");
+        return;
+      }
+
+      if (!customerEmail) {
+        alert("Please enter Customer email.");
+        return;
+      }
+
+      if (!customerMobile) {
+        alert("Please enter Customer Phone Number.");
+        return;
+      }
+
+      if (cartItems.length === 0) {
+        alert("Your cart is empty. Please add items to generate a bill.");
+        return;
+      }
+
+      await Promise.all(
+        cartItems.map(async (item) => {
+          try {
+            const price = await fetchProductPrice(item.productId);
+            item.price = price;
+          } catch (error) {
+            console.log(error);
+          }
+        })
+      );
+
+      renderCart();
+      calculateTotalAmount();
+
+      const productIds = cartItems.map(item => item.productId);
+      const quantities = cartItems.map(item => item.quantity.toString());
+
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+      $.ajax({
+        type: "POST",
+        url: "/generate_bill/",
+        headers: {
+          "X-CSRFToken": csrfToken
+        },
+        data: {
+          'customer_name': customerName,
+          'customer_email': customerEmail,
+          'customer_mobile': customerMobile,
+          'product_ids[]': productIds,
+          'quantities[]': quantities
+        },
+        success: function (response) {
+          if (response.success) {
+            const billData = response.bill_data;
+            const total = parseFloat(billData.total).toFixed(2);
+            const billHtml = `
+  <div class="bill-container" style="background-image: url({% static 'img/1.avif' %});">
+    <h1 class="bill-title">Bill</h1>
+
+    <div class="section">
+      <h2 class="section-title">Customer Information</h2>
+      <div class="customer-info">
+        <p><span class="label">Name:</span> ${billData.customer_name}</p>
+        <p><span class="label">Email:</span> ${billData.customer_email}</p>
+        <p><span class="label">Phone:</span> ${billData.customer_mobile}</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Product Information</h2>
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${billData.products.map(product => `
+            <tr>
+              <td>${product.name}</td>
+              <td>$${parseFloat(product.price).toFixed(2)}</td>
+              <td>${product.quantity}</td>
+              <td>$${parseFloat(product.subtotal).toFixed(2)}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Bill Summary</h2>
+      <p><span class="label">Total Amount:</span> $${total}</p>
+    </div>
+  // </div>
+   <div class="section">
+      <button class="save-button" onclick="saveAsPDF()">Save as PDF</button>
+    </div>
+  </div>
+`;
+
+            `).join('')}
+      <h3>Bill Summary</h3>
+      <p>Total Amount: $${total}</p>
+
+
+
+      
+    `;
+            // Replace the entire body with the bill HTML
+            document.body.innerHTML = billHtml;
+          } else {
+            alert("Failed to generate bill. " + response.message);
+          }
+        }
+
+
+      });
+    }
+
+    function saveAsPDF() {
+      const billContainer = document.querySelector('.bill-container');
+      html2pdf()
+        .set({
+          margin: 10,
+          filename: 'bill.pdf',
+          jsPDF: { unit: 'px', format: 'a4', orientation: 'portrait' }
+        })
+        .from(billContainer)
+        .save();
+    }
+
+
+  </script>
+</body>
+
+</html>
